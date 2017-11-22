@@ -1,0 +1,41 @@
+Bucket Name: checkinputfile-process or myworkflow
+
+
+need to create these folders under the newly created bucket.
+
+wrkflow_step1    --> for uploading csv input file
+wrkflow_step2	--> for storing generated json file
+wrkflow_step3	--> for storing json data along with finding price of code from third part service
+wrkflow_step4	--> for storing final json file with latest price
+wrkflow_step5	--> for storing converted json to csv file 
+
+create the following lambda function :
+
+
+
+role: lambda_basic_execution 
+
+step1 
+name: readcsvconvertjson.js
+step2 
+name: readjsoncallesdomainforcode.js
+step3 
+name: callthirdpartforprice.js
+step4 
+name: convertjsonintocsv.js
+step5 
+name: sendEmailNotification.py
+
+note: please note send email with attachment in written in python
+
+
+SNS topic name: myworkflow_sns
+
+need to copy the sns topic name in sendEmailNotification.py file.
+
+register your email from AWS SES console. it will verify both sender and receiver. update the verified email in sendEmailNotification.py.
+
+
+add the s3 event from bucket for each steps to call respective lambda function.
+
+when user click on BUY link. API gateway will cal Lambda function buildpriceApiGatewayFunction
